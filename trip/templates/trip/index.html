@@ -1,0 +1,61 @@
+{% extends "trip/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="navbar fixed-top navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="#">TripSEA</a>
+    <a class="nav-link" id="home"> Home </a>
+    <a class="nav-link" id="seaInfo"> S.E.A </a>
+    <a class="nav-link" id="aboutUs"> About Us </a>
+    <a class="nav-link" href="start" id="getStart"> Get Started </a>
+</div>
+<div class="body">
+    <div class="home-box" id="home-view">
+        <div id="home-view-para">
+            <h1>TripSEA</h1>
+            <h3>See your dream trip come alive</h3>
+            <p>We are a trip planning website that focuses on curating a personalised Southeast Asian trip for you.</p>
+        </div>
+        <a class="btn btn-lg base-btn" href="start">Get Started </a>
+    </div>
+    <div class="home-box" id="sea-view">
+        <div>
+            <h1>Southeast Asia</h1>
+            <p>There are 11 countries in Southeast Asia. Find out more by clicking the buttons!</p>
+        </div>
+        <div class="country-btns">
+            <button class="btn btn-lg country-btn" id="left-country-btn"><</button>
+            <button class="btn btn-lg country-btn" id="right-country-btn">></button>
+        </div>
+        <div class="country-info" id="0">
+            <a><img class="flag-img" src="{% static 'trip/images/Brunei.png' %}" alt="icon"/></a>
+            <h3 id="country-name">Brunei</h3>
+        </div>
+    </div>
+    <div class="home-box" id="about-us-view">
+        <h1>About us</h1>
+        <br>
+        <div class="container-sm align-items-center justify-content-center w-75">
+            <p class="text-justify-center">
+                We realise there are a few trip planning websites out there but they often
+                provide poor suggestions for Southeast Asian countries. This is because their
+                data largely focuses on Western countries, thus ignoring the diversity and
+                beauty that Southeast Asia has to offer.
+            </p>
+            <p class="text-justify-center">
+                Coming from a Southeast Asian background and leveraging all the untapped
+                information out there on Southeast Asia, we aim to only provide suggestions
+                to places where locals would visit. Our specialised AI planner will curate a
+                personalised trip for you based on your interests and budget.
+            </p>
+            <p class="text-sm-center">
+                Why don't you give it a try? It's exactly like booking with a travel agent, but better.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'trip/home.js' %}"></script>
+{% endblock %}

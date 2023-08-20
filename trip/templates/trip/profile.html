@@ -1,0 +1,78 @@
+{% extends "trip/layout.html" %}
+{% load static %}
+{% load extra_tags %}
+
+{% block body %}
+<div class="navbar fixed-top navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="#">TripSEA</a>
+    <a class="nav-link" href="/"> Home </a>
+    <a class="nav-link" href="/start#continue"> Start Again </a>
+    <a class="nav-link" href="#" onclick="log_out()">Log Out</a>
+</div>
+<div class="body">
+    <div class="container-sm">
+        <h2 id="profile-welcome">Welcome {{ user.first_name|capfirst }} {{ user.last_name|capfirst }}!</h2>
+        <h6 id="profile-last-login">You last logged in on the {{ user.last_login }}.</h6>
+        <hr>
+        {% if planner %}
+            <div class="table-responsive">
+                <h5>Your Itineraries</h5>
+                <table class="table table-bordered table-layout-1">
+                    <thead>
+                        <tr>
+                            <td>Date Created</td>
+                            <td>Country</td>
+                            <td>Start Date</td>
+                            <td>End Date</td>
+                            <td>People</td>
+                            <td>Trip Type</td>
+                            <td>Interests</td>
+                            <td>Full Itinerary</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for plan in planner %}
+                            <tr>
+                                <td>{{ plan.date_created }}</td>
+                                <td>{{ plan.country }}</td>
+                                <td>{{ plan.start_date }}</td>
+                                <td>{{ plan.end_date }}</td>
+                                <td>{{ plan.people }}</td>
+                                <td>{{ plan.budget }}</td>
+                                <td>{{ plan.get_planner_interest|join:", " }}</td>
+                                <td><a href="{% url 'itinerary' key=plan.get_unique_itinerary_key %}" target="_blank">Click Here</a>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% if planner.has_other_pages %}
+                    <ul class="pagination">
+                        {% if planner.has_previous %}
+                            <li><a href="?page={{ planner.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&laquo;</span></li>
+                        {% endif %}
+                        {% for i in planner.paginator.page_range %}
+                            {% if planner.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                            {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if users.has_next %}
+                            <li><a href="?page={{ planner.next_page_number }}">&raquo;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% else %}
+            <h5>You have not planned an itinerary yet. Start planning one now by clicking 'Start Again'!</h5>
+        {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'trip/start.js' %}"></script>
+{% endblock %}
